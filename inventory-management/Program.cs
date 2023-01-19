@@ -1,3 +1,10 @@
+using Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Services.Interfaces;
+using Services.Services;
+using System.Reflection;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +13,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<InventoryManagementContext>(options => 
+   options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+builder.Services.AddAutoMapper(Assembly.Load("Services"));
+
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 
 var app = builder.Build();
 
