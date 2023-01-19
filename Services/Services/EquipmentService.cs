@@ -33,6 +33,18 @@ namespace Services.Services
          return equipmentVM;
       }
 
+      public async Task<EquipmentVM> AddEquipment(EquipmentCreateVM equipmentCreate)
+      {
+         
+         Equipment equipment = _mapper.Map<Equipment>(equipmentCreate);
+         _context.Equipment.Add(equipment);
+         await _context.SaveChangesAsync();
+
+         EquipmentVM result = _mapper.Map<EquipmentVM>(equipment);
+         return result;       
+      
+      }
+
 
    }
 }

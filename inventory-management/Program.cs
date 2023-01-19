@@ -20,6 +20,7 @@ builder.Services.AddDbContext<InventoryManagementContext>(options =>
 builder.Services.AddAutoMapper(Assembly.Load("Services"));
 
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+//builder.Services.AddScoped<EquipmentService>();
 
 var app = builder.Build();
 

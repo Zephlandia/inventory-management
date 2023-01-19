@@ -89,3 +89,4 @@ D:\Workspace\InventoryManagement\inventory-management\inventory-management\bin\D
 D:\Workspace\InventoryManagement\inventory-management\inventory-management\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\Workspace\InventoryManagement\inventory-management\inventory-management\bin\Debug\net6.0\AutoMapper.dll
 D:\Workspace\InventoryManagement\inventory-management\inventory-management\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Workspace\InventoryManagement\inventory-management\inventory-management\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Versioning.dll
