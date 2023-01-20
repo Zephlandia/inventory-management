@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models.ViewModels;
 using Services.Interfaces;
-using Services.Services;
 
 namespace inventory_management.Controllers
 {
    [ApiController]
    [Route("[controller]")]
-   public class EquipmentController : Controller
+   public class LocationController : Controller
    {
-      private readonly ILogger<EquipmentController> _logger;
-      private readonly IEquipmentService _equipmentService;
+      private readonly ILogger<LocationController> _logger;
+      private readonly ILocationService _locationService;
 
 
-      public EquipmentController(ILogger<EquipmentController> logger, IEquipmentService equipmentService)
+      public LocationController(ILogger<LocationController> logger, ILocationService locationService)
       {
          _logger = logger;
-         _equipmentService = equipmentService;
+         _locationService = locationService;
       }
 
       [HttpGet("{guid}")]
@@ -24,22 +23,22 @@ namespace inventory_management.Controllers
 
       public async Task<ActionResult<EquipmentVM>> Get(Guid guid)
       {
-         EquipmentVM equipmentVM = await _equipmentService.GetEquipmentById(guid);
-         if (equipmentVM == null)
+         LocationVM locationVM = await _locationService.GetLocationById(guid);
+         if (locationVM == null)
             return NotFound();
-         
-         return equipmentVM;
+
+         return Ok(locationVM);
       }
 
 
       [HttpPost]
-      public async Task<ActionResult<EquipmentVM>> CreateEquipment([FromBody] EquipmentCreateVM equipment)
+      public async Task<ActionResult<LocationVM>> CreateLocation([FromBody] LocationCreateVM location)
       {
          try
          {
-            
-            var equipmentReturned = await _equipmentService.AddEquipment(equipment);
-            return equipmentReturned;
+
+            var locationReturned = await _locationService.AddLocation(location);
+            return locationReturned;
             //return CreatedAtAction("GetCustomer", new { guid = equipmentReturned.EquipmentId, version = apiVersion.ToString() }, equipmentReturned.EquipmentId);
          }
          catch (ArgumentNullException e)
@@ -50,7 +49,7 @@ namespace inventory_management.Controllers
          catch (Exception e)
          {
             _logger.LogError(e.Message);
-            throw new Exception("Creating Customer failed.");
+            throw new Exception("Creating Location failed.");
          }
 
       }
