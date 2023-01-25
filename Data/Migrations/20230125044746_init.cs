@@ -12,6 +12,18 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Classification",
+                columns: table => new
+                {
+                    ClassificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classification", x => x.ClassificationId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Position",
                 columns: table => new
                 {
@@ -21,18 +33,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Position", x => x.PositionId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Type",
-                columns: table => new
-                {
-                    TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Type", x => x.TypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,9 +64,9 @@ namespace Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ManagerUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Province = table.Column<string>(type: "nvarchar(26)", maxLength: 26, nullable: true)
+                    Province = table.Column<string>(type: "nvarchar(26)", maxLength: 26, nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,7 +88,7 @@ namespace Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LocationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClassificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -96,28 +96,28 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Equipment", x => x.EquipmentId);
                     table.ForeignKey(
+                        name: "FK_Equipment_Classification_ClassificationId",
+                        column: x => x.ClassificationId,
+                        principalTable: "Classification",
+                        principalColumn: "ClassificationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Equipment_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
                         principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Equipment_Type_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "Type",
-                        principalColumn: "TypeId",
-                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipment_ClassificationId",
+                table: "Equipment",
+                column: "ClassificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipment_LocationId",
                 table: "Equipment",
                 column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Equipment_TypeId",
-                table: "Equipment",
-                column: "TypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Location_UserId",
@@ -135,10 +135,10 @@ namespace Data.Migrations
                 name: "Position");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Classification");
 
             migrationBuilder.DropTable(
-                name: "Type");
+                name: "Location");
 
             migrationBuilder.DropTable(
                 name: "User");

@@ -2,6 +2,7 @@ namespace inventory_management
 {
    public class WeatherForecast
    {
+      public Guid WeatherForecastId { get; set; }
       public DateTime Date { get; set; }
 
       public int TemperatureC { get; set; }

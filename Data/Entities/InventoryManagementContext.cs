@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Data.Entities
 {
@@ -15,9 +11,15 @@ namespace Data.Entities
       public virtual DbSet<Equipment> Equipment { get; set; }
       public virtual DbSet<Location> Location { get; set; }
       public virtual DbSet<Position> Position { get; set; }
-      public virtual DbSet<Type> Type { get; set; }
+      public virtual DbSet<Classification> Classification{ get; set; }
       public virtual DbSet<User> User { get; set; }
 
+
+      protected override void OnModelCreating(ModelBuilder modelBuilder)
+      {
+   
+
+      }
 
    }
 }

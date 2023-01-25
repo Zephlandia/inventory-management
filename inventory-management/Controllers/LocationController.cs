@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Models.ViewModels;
 using Services.Interfaces;
 
@@ -18,9 +19,8 @@ namespace inventory_management.Controllers
          _locationService = locationService;
       }
 
+      [EnableQuery]
       [HttpGet("{guid}")]
-      [ProducesResponseType(StatusCodes.Status404NotFound)]
-
       public async Task<ActionResult<EquipmentVM>> Get(Guid guid)
       {
          LocationVM locationVM = await _locationService.GetLocationById(guid);

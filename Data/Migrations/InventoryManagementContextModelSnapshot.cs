@@ -22,6 +22,21 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Data.Entities.Classification", b =>
+                {
+                    b.Property<Guid>("ClassificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClassificationId");
+
+                    b.ToTable("Classification");
+                });
+
             modelBuilder.Entity("Data.Entities.Equipment", b =>
                 {
                     b.Property<int>("EquipmentId")
@@ -29,6 +44,9 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquipmentId"));
+
+                    b.Property<Guid>("ClassificationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -47,14 +65,11 @@ namespace Data.Migrations
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("EquipmentId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("ClassificationId");
 
-                    b.HasIndex("TypeId");
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Equipment");
                 });
@@ -128,22 +143,6 @@ namespace Data.Migrations
                     b.ToTable("Position");
                 });
 
-            modelBuilder.Entity("Data.Entities.Type", b =>
-                {
-                    b.Property<Guid>("TypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("TypeId");
-
-                    b.ToTable("Type");
-                });
-
             modelBuilder.Entity("Data.Entities.User", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -179,21 +178,21 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Equipment", b =>
                 {
+                    b.HasOne("Data.Entities.Classification", "Classification")
+                        .WithMany()
+                        .HasForeignKey("ClassificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.Type", "Type")
-                        .WithMany()
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Classification");
 
                     b.Navigation("Location");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Data.Entities.Location", b =>

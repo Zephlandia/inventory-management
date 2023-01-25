@@ -1,4 +1,6 @@
-﻿using Services.Interfaces;
+﻿using Data.Entities;
+using Models.ViewModels;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +11,7 @@ namespace Services.Services
 {
    public class UserService : IUserService
    {
+
+
    }
 }

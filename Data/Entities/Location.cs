@@ -32,8 +32,8 @@ namespace Data.Entities
       public bool IsActive { get; set; }
 
       [ForeignKey("UserId")]
-      public Guid ManagerUserId { get; set; }      
-      
+      public Guid ManagerUserId { get; set; }
+
       public string? PostalCode { get; set; }
       [StringLength(26)]
       public string? Province { get; set; }

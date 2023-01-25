@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
 using Models.ViewModels;
 
-using Type = Data.Entities.Type;
-
 namespace Services.Mappings
 {
    internal class TypeProfile : Profile
    {
       public TypeProfile()
       {
-         CreateMap<Type, TypeVM>();
-         CreateMap<TypeVM, Type>();
+         CreateMap<Type, EquipmentTypeVM>();
+         CreateMap<EquipmentTypeVM, Type>();
 
-         CreateMap<Type, TypeCreateVM>();
-         CreateMap<TypeCreateVM, Type>();
+         CreateMap<Type, EquipmentTypeCreateVM>();
+         CreateMap<EquipmentTypeCreateVM, Type>();
 
-         CreateMap<Type, TypeUpdateVM>();
-         CreateMap<TypeUpdateVM, Type>();
+         CreateMap<Type, EquipmentTypeUpdateVM>();
+         CreateMap<EquipmentTypeUpdateVM, Type>();
       }
    }
 }
